@@ -10,8 +10,8 @@ I am not responsible in case of problems with schedules, rooms and dates.
 **Tested with Python 3.8**
 
 ## Requirement
-Have python or anything to execute .py files
-python library :pandas, tkinter, sqlite3
+Have python or anything to execute .py files.
+Python library :pandas, tkinter, sqlite3.
 
 ## Contact 
 if you need help, contact me here :
