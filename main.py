@@ -2,6 +2,14 @@ import csv
 import pandas
 import sqlite3
 
+def end():
+     connexion.close()  # Déconnexion
+
+def connexion():
+     connexion = sqlite3.connect("database.db")  ## BDD dans le fichier
+     curseur = connexion.cursor()  # Récupération d'un curseur
+     return(curseur)
+
 def matiere(n):
      if n[0] == "M":
           cours = "Mathematiques"
@@ -17,24 +25,9 @@ def matiere(n):
           cours = "Sciences_Industrielles"
      return(cours)
 
-def end():
-     connexion.close()  # Déconnexion
-
-def connexion():
-     try:
-          connexion = sqlite3.connect("database.db")  ## BDD dans le fichier
-          curseur = connexion.cursor()  # Récupération d'un curseur
-          return(curseur)
-     except sqlite3.Error as error:
-          print("\nUne erreur dans la connexion à la DBB...")
-
-
 def recupDate(groupe,date):
 
-     ### me plaît pas (refaire la connexion à chaque fois)
-     connexion = sqlite3.connect("database.db")  ## BDD dans le fichier
-     curseur = connexion.cursor()  # Récupération d'un curseur
-     ### ------------------------------------------------
+     curseur = connexion()
      date = "Semaine du " + date
      groupe = "G"+groupe
      curseur.execute("SELECT " + str(groupe) + " FROM colles WHERE field1 = ?", [date])
@@ -45,10 +38,7 @@ def recupDate(groupe,date):
      return(colle)
 
 def recupAllDate():
-     ### me plaît pas (refaire la connexion à chaque fois)
-     connexion = sqlite3.connect("database.db")  ## BDD dans le fichier
-     curseur = connexion.cursor()  # Récupération d'un curseur
-     ### ------------------------------------------------
+     curseur = connexion()
      curseur.execute("SELECT field1 FROM colles ")
      date = curseur.fetchall()
      x = []
@@ -58,10 +48,7 @@ def recupAllDate():
      return(x)
 
 def recupColle(colle):
-     ### me plaît pas (refaire la connexion à chaque fois)
-     connexion = sqlite3.connect("database.db")  ## BDD dans le fichier
-     curseur = connexion.cursor()  # Récupération d'un curseur
-     ### ------------------------------------------------
+     curseur = connexion()
      liste1 = []
      for k in range(1,len(colle)+1):
           cours = matiere(colle[k-1])
