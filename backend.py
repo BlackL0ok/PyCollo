@@ -12,7 +12,7 @@ def connexion():
 
 def matiere(n):
      if n[0] == "M":
-          cours = "Mathematiques"
+          cours = "Mathematique"
      elif n[0]  == "A":
           cours = "Anglais"
      elif n[0] == "P":
