@@ -1,9 +1,4 @@
-import csv
-import pandas
-import sqlite3
-
-def end():
-     connexion.close()  # Déconnexion
+import csv,pandas,sqlite3,datetime,calendar
 
 def connexion():
      connexion = sqlite3.connect("database.db")  ## BDD dans le fichier
@@ -30,7 +25,7 @@ def recupDate(groupe,date):
      curseur = connexion()
      date = "Semaine du " + date
      groupe = "G"+groupe
-     curseur.execute("SELECT " + str(groupe) + " FROM colles WHERE field1 = ?", [date])
+     curseur.execute("SELECT " + groupe + " FROM colles WHERE field1 = ?", [date])
      colle = curseur.fetchone()
      colle = ''.join(colle)
      colle = colle.split()
@@ -59,3 +54,30 @@ def recupColle(colle):
                info = list(info)
                liste1.append(info[x-1])
      return(liste1)
+
+
+def dateAuto():
+     date = datetime.date.today()    ## recupere la date
+     jour = date.isoweekday()
+     date = str(date)
+     if int(date[5:7]) < jour:
+          new_month = int(date[5:7]) - 1
+          new_date = date.replace(date[5:7],str(new_month))
+          nbr_jour = calendar.monthrange(int(date[0:4]),int(date[5:7]))
+          nbr_jour = nbr_jour[1]
+          jour_restant = jour - int(date[5:7])
+          nbr_jour = nbr_jour - jour_restant
+          date = new_date.replace(date[8:],str(nbr_jour))
+     else:
+          if int(date[8:]) < 10:
+               x = int(date[9:]) - (jour - 1)
+               lundi = '0'+str(x)
+          else:
+               lundi = +str(int(date[8:])+(jour-1))
+          date = date[:8] + lundi
+     date = date.replace('-','/')
+     JJ = date[8:]
+     MM = date[5:7]
+     date = date.replace(JJ,MM)
+     date = date.replace(MM, JJ,1)
+     return(str(date[5:]))

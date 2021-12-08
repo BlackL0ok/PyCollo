@@ -78,6 +78,7 @@ def recherchedate():
         date_jjmm.append(date[k][11:])
     resultat_sbox_d = StringVar(value=0)
     ssbox = Spinbox(zoneMenu,value=date_jjmm,textvariable=resultat_sbox_d,bg='#272424',foreground="#e8e5e5")
+    resultat_sbox_d.set(dateAuto())
     ssbox.grid(row=2,column=3)
 
     # Création du Lbael semaine
